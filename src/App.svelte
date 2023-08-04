@@ -82,7 +82,6 @@
   main {
     text-align: center;
     padding: 1em;
-    max-width: 240px;
     margin: 0 auto;
     color: #025959;
   }
@@ -143,12 +142,15 @@
     word-wrap: break-word;
     margin: 0;
     padding: 0;
+    overflow: hidden;
   }
   .list-item--content {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     word-wrap: break-word;
+    max-width: 80%;
+    overflow: hidden;
   }
   .list-item__delete {
     margin: 0;
@@ -184,9 +186,16 @@
     margin-right: 15px;
   }
 
-  @media (min-width: 640px) {
-    main {
-      max-width: none;
+  @media (max-width: 668px) {
+    input[type="text"],
+    .items-info {
+      width: 80%;
+    }
+    .list-item {
+      width: 90%;
+    }
+    .list-item__delete {
+      font-size: 15px;
     }
   }
 </style>
