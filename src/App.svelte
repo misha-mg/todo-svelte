@@ -1,11 +1,7 @@
 <script>
-  import Checkbox from "@smui/checkbox";
   let inputText;
 
   let todoList = [];
-  let itemId = 0;
-
-  let exitedPrimary = false;
 
   function addElement(event) {
     if (event.key !== "Enter" || inputText.length == 0) return;
