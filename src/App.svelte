@@ -34,7 +34,7 @@
         newArr.sort((a, b) => a.id - b.id);
         sortCount += 1;
       } else if (sortCount == 1) {
-        newArr.sort((a, b) => b.isChecked - a.isChecked).reverse();
+        newArr.sort((a, b) => a.isChecked - b.isChecked);
         sortCount = 0;
       }
       console.log(sortCount);
