@@ -1,14 +1,16 @@
 <script>
   let inputText;
+  import { fade } from "svelte/transition";
+  import { flip } from "svelte/animate";
 
   let todoList = [];
+  let id = 0;
 
   function addElement(event) {
     if (event.key !== "Enter" || inputText.length == 0) return;
+    id += 1;
 
-    todoList = [...todoList, { item: inputText, isChecked: false }];
-
-    console.log(todoList);
+    todoList = [...todoList, { id: id, item: inputText, isChecked: false }];
 
     inputText = "";
   }
@@ -21,8 +23,6 @@
       const newList = [...todoList];
       newList.splice(id, 1);
       todoList = newList;
-      console.log(id);
-      console.log("удалился номер: ", id);
     };
   }
 </script>
@@ -38,7 +38,7 @@
   />
 
   {#if todoList.length > 0}
-    <div class="items-info">
+    <div transition:fade class="items-info">
       <div id="total-item" class="total-item active">
         Total: {todoList.length}
       </div>
@@ -49,13 +49,17 @@
   {/if}
 
   <div class="list">
-    {#each todoList as todo, i}
-      <div class="list-item">
+    {#each todoList as todo, i (todo.id)}
+      <div
+        transition:fade={{ duration: 100 }}
+        animate:flip={{ duration: 300 }}
+        class="list-item"
+      >
         <div class="list-item--content">
           <input
             bind:checked={todo.isChecked}
             type="checkbox"
-            on:click={() => handleCheck(i)}
+            on:click={() => handleCheck(todo.id)}
           />
           {#if todo.isChecked == true}
             <span class="list-item__text checked">{todo.item}</span>
