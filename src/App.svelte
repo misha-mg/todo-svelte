@@ -25,6 +25,22 @@
       todoList = newList;
     };
   }
+
+  let sortCount = 1;
+  function hendleSort() {
+    if (todoList.filter((item) => item.isChecked === true).length >= 1) {
+      let newArr = [...todoList];
+      if (sortCount == 0) {
+        newArr.sort((a, b) => a.id - b.id);
+        sortCount += 1;
+      } else if (sortCount == 1) {
+        newArr.sort((a, b) => b.isChecked - a.isChecked).reverse();
+        sortCount = 0;
+      }
+      console.log(sortCount);
+      todoList = newArr;
+    }
+  }
 </script>
 
 <main>
@@ -45,13 +61,16 @@
       <div id="done-item" class="done-item active">
         Done: {todoList.filter((item) => item.isChecked === true).length}
       </div>
+      <button class="list-item__button list-item__sort" on:click={hendleSort}
+        >SORT</button
+      >
     </div>
   {/if}
 
   <div class="list">
     {#each todoList as todo, i (todo.id)}
       <div
-        transition:fade={{ duration: 100 }}
+        transition:fade={{ duration: 200 }}
         animate:flip={{ duration: 300 }}
         class="list-item"
       >
@@ -59,7 +78,7 @@
           <input
             bind:checked={todo.isChecked}
             type="checkbox"
-            on:click={() => handleCheck(todo.id)}
+            on:click={() => handleCheck(i)}
           />
           {#if todo.isChecked == true}
             <span class="list-item__text checked">{todo.item}</span>
@@ -67,8 +86,9 @@
             <span class="list-item__text">{todo.item}</span>
           {/if}
         </div>
-        <button class="list-item__delete" on:click={hendleDelete(i)}
-          >Delete</button
+        <button
+          class="list-item__button list-item__delete"
+          on:click={hendleDelete(i)}>Delete</button
         >
       </div>
     {/each}
@@ -152,7 +172,7 @@
     max-width: 80%;
     overflow: hidden;
   }
-  .list-item__delete {
+  .list-item__button {
     margin: 0;
     border: none;
     border-radius: 3px;
@@ -160,9 +180,13 @@
     background-color: #6cc5c6;
     transition: all 0.2s;
   }
-  .list-item__delete:hover {
+  .list-item__button:hover {
     background-color: #025959;
     color: #6cc5c6;
+  }
+  .list-item__sort {
+    margin-left: 15px;
+    width: 70px;
   }
   .checked {
     text-decoration: line-through;
