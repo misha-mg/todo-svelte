@@ -1,33 +1,23 @@
 <script>
-  let inputText;
   import { fade } from "svelte/transition";
   import { flip } from "svelte/animate";
+  import ListItem from "./copmonents/listItem.svelte";
+  // import { addElement } from "./app/utils";
 
   let todoList = [];
   let id = 0;
+  let inputText;
+  let sortCount = 1;
 
-  function addElement(event) {
+  function addElement() {
     if (event.key !== "Enter" || inputText.length == 0) return;
     id += 1;
-
     todoList = [...todoList, { id: id, item: inputText, isChecked: false }];
-
     inputText = "";
   }
 
-  function handleCheck(id) {
-    todoList[id].isChecked = !todoList[id].isChecked;
-  }
-  function hendleDelete(id) {
-    return () => {
-      const newList = [...todoList];
-      newList.splice(id, 1);
-      todoList = newList;
-    };
-  }
-
-  let sortCount = 1;
-  function hendleSort() {
+  function handleSort() {
+    console.log("sort");
     if (todoList.filter((item) => item.isChecked === true).length >= 1) {
       let newArr = [...todoList];
       if (sortCount == 0) {
@@ -37,9 +27,18 @@
         newArr.sort((a, b) => a.isChecked - b.isChecked);
         sortCount = 0;
       }
-      console.log(sortCount);
       todoList = newArr;
     }
+  }
+
+  function handleDelete(id) {
+    console.log("id");
+    return () => {
+      const newList = [...todoList];
+      newList.splice(id, 1);
+      console.log(newList);
+      todoList = newList;
+    };
   }
 </script>
 
@@ -50,7 +49,7 @@
     type="text"
     bind:value={inputText}
     placeholder="new..."
-    on:keydown={addElement}
+    on:keydown={() => addElement()}
   />
 
   {#if todoList.length > 0}
@@ -61,7 +60,7 @@
       <div id="done-item" class="done-item active">
         Done: {todoList.filter((item) => item.isChecked === true).length}
       </div>
-      <button class="list-item__button list-item__sort" on:click={hendleSort}
+      <button class="list-item__button list-item__sort" on:click={handleSort}
         >SORT</button
       >
     </div>
@@ -74,22 +73,13 @@
         animate:flip={{ duration: 300 }}
         class="list-item"
       >
-        <div class="list-item--content">
-          <input
-            bind:checked={todo.isChecked}
-            type="checkbox"
-            on:click={() => handleCheck(i)}
-          />
-          {#if todo.isChecked == true}
-            <span class="list-item__text checked">{todo.item}</span>
-          {:else}
-            <span class="list-item__text">{todo.item}</span>
-          {/if}
-        </div>
-        <button
-          class="list-item__button list-item__delete"
-          on:click={hendleDelete(i)}>Delete</button
-        >
+        <ListItem
+          isChecked={todo.isChecked}
+          item={todo.item}
+          index={i}
+          {todoList}
+          handleDelete={() => handleDelete(i)}
+        />
       </div>
     {/each}
   </div>
@@ -126,18 +116,6 @@
   input::placeholder {
     color: #025959;
   }
-  input[type="checkbox"] {
-    min-width: 20px;
-    min-height: 20px;
-    margin: 0;
-    padding: 0;
-    cursor: pointer;
-    margin-right: 20px;
-    display: flex;
-    justify-self: center;
-    align-items: center;
-    color: #9ed6d7;
-  }
 
   .list {
     display: flex;
@@ -163,6 +141,7 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
+    text-align: left;
   }
   .list-item--content {
     display: flex;
