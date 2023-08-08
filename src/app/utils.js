@@ -1,11 +1,12 @@
-function addElement() {
-    if (event.key !== "Enter" || inputText.length == 0) return;
-    id += 1;
-    todoList = [...todoList, { id: id, item: inputText, isChecked: false }];
-    inputText = "";
+function addElement(event, inputText, id, todoList) {
+  if (event.key !== "Enter" || inputText.length == 0) return [inputText, id, todoList];
+  id += 1;
+  todoList = [...todoList, { id: id, item: inputText, isChecked: false }];
+  inputText = "";
+  return [inputText, id, todoList]
 }
 
-function handleSort() {
+function handleSort(todoList, sortCount) {
   if (todoList.filter((item) => item.isChecked === true).length >= 1) {
     let newArr = [...todoList];
     if (sortCount == 0) {
@@ -16,16 +17,15 @@ function handleSort() {
       sortCount = 0;
     }
     todoList = newArr;
+    return [todoList, sortCount]
   }
 }
-
-function handleDelete(id) {
-    console.log("id", id);
+  function handleDelete(e, todoList, setTodo) {
+    let id = e.getAttribute("data-id");
     return () => {
       const newList = [...todoList];
       newList.splice(id, 1);
-      console.log(newList);
-      todoList = newList;
+      setTodo(newList)
     };
   }
 

@@ -1,10 +1,11 @@
 <script>
   import { fade } from "svelte/transition";
   import { flip } from "svelte/animate";
-  import ListItem from "../list-item/listItem.svelte";
+  import ListItem from "../list-item/LlistItem.svelte";
 
   export let todoList;
   export let handleDelete;
+  export let setTodo;
 </script>
 
 <div class="list">
@@ -20,6 +21,7 @@
         index={i}
         {todoList}
         {handleDelete}
+        {setTodo}
       />
     </div>
   {/each}
