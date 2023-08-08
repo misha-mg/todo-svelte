@@ -1,5 +1,5 @@
 function addElement(event, inputText, id, todoList) {
-  if (event.key !== "Enter" || inputText.length == 0) return [inputText, id, todoList];
+  if (event.key !== "Enter" || !inputText || inputText.length == 0) return [inputText, id, todoList];
   id += 1;
   todoList = [...todoList, { id: id, item: inputText, isChecked: false }];
   inputText = "";
