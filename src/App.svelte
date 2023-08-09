@@ -5,7 +5,6 @@
   import "./app.css";
 
   import { addElement, handleSort, handleDelete } from "./app/utils.js";
-  import { fade } from "svelte/transition";
 
   let todoList = [];
   let id = 0;
