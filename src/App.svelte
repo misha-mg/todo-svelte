@@ -1,7 +1,7 @@
 <script>
   import InputItem from "./copmonents/input-item/InputItem.svelte";
   import FullList from "./copmonents/list/FullList.svelte";
-  import ListData from "./copmonents/list-data/ListData.svelte";
+  import ListInfo from "./copmonents/list-info/ListInfo.svelte";
   import "./app.css";
 
   import { addElement, handleSort, handleDelete } from "./app/utils.js";
@@ -22,7 +22,7 @@
   <InputItem {inputText} {addElement} {id} {todoList} {setTodo} />
 
   {#if todoList.length > 0}
-    <ListData {sortCount} {todoList} {handleSort} {setTodo} />
+    <ListInfo {sortCount} {todoList} {handleSort} {setTodo} />
   {/if}
 
   <FullList {todoList} {handleDelete} {setTodo} />
