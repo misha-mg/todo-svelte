@@ -1,5 +1,5 @@
 <script>
-  import Input from "./copmonents/input-item/Input.svelte";
+  import InputItem from "./copmonents/input-item/InputItem.svelte";
   import List from "./copmonents/list/List.svelte";
   import ListData from "./copmonents/list-data/ListData.svelte";
   import "./app.css";
@@ -19,7 +19,7 @@
 <main>
   <h1>TODO APP</h1>
 
-  <Input {inputText} {addElement} {id} {todoList} {setTodo} />
+  <InputItem {inputText} {addElement} {id} {todoList} {setTodo} />
 
   {#if todoList.length > 0}
     <ListData {sortCount} {todoList} {handleSort} {setTodo} />
