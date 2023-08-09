@@ -1,6 +1,6 @@
 <script>
   import InputItem from "./copmonents/input-item/InputItem.svelte";
-  import List from "./copmonents/list/List.svelte";
+  import FullList from "./copmonents/list/FullList.svelte";
   import ListData from "./copmonents/list-data/ListData.svelte";
   import "./app.css";
 
@@ -25,5 +25,5 @@
     <ListData {sortCount} {todoList} {handleSort} {setTodo} />
   {/if}
 
-  <List {todoList} {handleDelete} {setTodo} />
+  <FullList {todoList} {handleDelete} {setTodo} />
 </main>
