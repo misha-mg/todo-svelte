@@ -17,6 +17,8 @@
   }
 
   onMount(() => {
+    let cameraStatus = false;
+
     const SUPPORTS_MEDIA_DEVICES = "mediaDevices" in navigator;
 
     if (SUPPORTS_MEDIA_DEVICES) {
@@ -55,8 +57,10 @@
                 const btn = document.querySelector(".switch");
                 btn.addEventListener("click", function () {
                   track.applyConstraints({
-                    advanced: [{ torch: true }],
+                    advanced: [{ torch: !cameraStatus }],
                   });
+                  cameraStatus = !cameraStatus;
+                  console.log(cameraStatus);
                 });
               });
           });
