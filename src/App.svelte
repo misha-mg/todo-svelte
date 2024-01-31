@@ -44,6 +44,8 @@
           .then((stream) => {
             const track = stream.getVideoTracks()[0];
 
+            // console.log("track", track);
+
             const imageCapture = new ImageCapture(track);
             const photoCapabilities = imageCapture
               .getPhotoCapabilities()
@@ -53,9 +55,13 @@
                   track.applyConstraints({
                     advanced: [{ torch: !cameraStatus }],
                   });
-                  cameraStatus = !cameraStatus;
+                  cameraStatus != cameraStatus;
                 });
               });
+          })
+          .catch((error) => {
+            console.log("error", error);
+            alert(error);
           });
       });
     }
