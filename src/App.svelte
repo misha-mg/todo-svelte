@@ -12,6 +12,8 @@
   let inputText;
   let sortCount = 1;
 
+  let showButton = true;
+
   function setTodo(arr) {
     todoList = arr;
   }
@@ -55,12 +57,13 @@
                   track.applyConstraints({
                     advanced: [{ torch: !cameraStatus }],
                   });
-                  cameraStatus != cameraStatus;
+                  cameraStatus = !cameraStatus;
                 });
               });
           })
           .catch((error) => {
             console.log("error", error);
+            showButton = false;
             alert(error);
           });
       });
@@ -72,7 +75,10 @@
 
 <main>
   <h1>TODO APP</h1>
-  <button class="switch">On / Off</button>
+
+  {#if showButton}
+    <button class="switch">On / Off</button>
+  {/if}
 
   <InputItem {inputText} {addElement} {id} {todoList} {setTodo} />
 
